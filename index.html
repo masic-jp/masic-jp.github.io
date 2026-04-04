@@ -4,149 +4,427 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MaSIC — 一般社団法人 数理社会実装教育研究センター</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --c-bg: #ffffff;
+      --c-text: #0f172a;
+      --c-text-muted: #64748b;
+      --c-primary: #0ea5e9;
+      --c-primary-dark: #0284c7;
+      --c-surface: #f8fafc;
+      --c-border: #e2e8f0;
+      --font-en: 'Inter', sans-serif;
+      --font-ja: 'Noto Sans JP', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      font-family: "Helvetica Neue", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-      color: #1a1a2e;
-      background: #fafafa;
-      line-height: 1.8;
+      font-family: var(--font-en);
+      color: var(--c-text);
+      background-color: var(--c-bg);
+      line-height: 1.7;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
-    header {
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-      color: #fff;
-      text-align: center;
-      padding: 3rem 1.5rem 3.5rem;
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: var(--font-ja);
+      line-height: 1.3;
+      font-weight: 700;
     }
-    .logo-card {
-      display: inline-block;
-      background: #f4f4f1;
-      border-radius: 14px;
-      padding: 0.85rem 1.25rem 1rem;
-      margin-bottom: 1.35rem;
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+
+    p { font-family: var(--font-ja); }
+
+    /* Navigation */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      z-index: 1000;
+      transition: all 0.3s ease;
     }
-    .logo-card img {
-      display: block;
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--c-text);
+    }
+    .nav-logo {
+      height: 40px;
       width: auto;
-      max-width: min(78vw, 260px);
-      height: auto;
+      mix-blend-mode: multiply; /* 白背景を透過させる魔法 */
     }
-    header h1 {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      padding: 0;
-      margin: -1px;
-      overflow: hidden;
-      clip: rect(0, 0, 0, 0);
-      white-space: nowrap;
-      border: 0;
-    }
-    header p.subtitle {
-      font-size: 1rem;
-      font-weight: 400;
-      opacity: 0.85;
+    .nav-title {
+      font-weight: 800;
+      font-size: 1.25rem;
       letter-spacing: 0.05em;
     }
-    main {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 3rem 1.5rem;
-    }
-    section { margin-bottom: 2.5rem; }
-    section h2 {
-      font-size: 1.25rem;
+    .nav-contact {
+      font-family: var(--font-ja);
+      font-size: 0.9rem;
       font-weight: 600;
-      border-left: 4px solid #0f3460;
-      padding-left: 0.75rem;
+      color: #fff;
+      background: var(--c-text);
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-contact:hover { background: var(--c-primary); }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 5% 60px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(2, 132, 199, 0.05) 0%, transparent 40%);
+      z-index: -1;
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-content {
+      max-width: 800px;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-family: var(--font-ja);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--c-primary-dark);
+      background: rgba(14, 165, 233, 0.1);
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.8s ease-out;
+    }
+    .hero-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+      color: var(--c-text);
+      animation: fadeUp 0.8s ease-out 0.1s both;
+    }
+    .hero-title span {
+      background: linear-gradient(135deg, var(--c-primary) 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-desc {
+      font-size: clamp(1.1rem, 2vw, 1.25rem);
+      color: var(--c-text-muted);
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      animation: fadeUp 0.8s ease-out 0.2s both;
+    }
+
+    /* Sections */
+    .section {
+      padding: 8rem 5%;
+    }
+    .section-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .section-header {
+      margin-bottom: 4rem;
+    }
+    .section-label {
+      font-family: var(--font-en);
+      font-weight: 800;
+      color: var(--c-primary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.5rem);
+    }
+
+    /* Mission Split */
+    .mission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .mission-text {
+      font-size: 1.25rem;
+      line-height: 1.8;
+      color: var(--c-text);
+      font-weight: 500;
+    }
+    .mission-text p { margin-bottom: 1.5rem; }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 24px;
+      padding: 3rem 2rem;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+      border-color: transparent;
+      background: #fff;
+    }
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(14, 165, 233, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-primary);
+      margin-bottom: 1.5rem;
+    }
+    .card-icon svg { width: 24px; height: 24px; }
+    .card-title {
+      font-size: 1.25rem;
       margin-bottom: 1rem;
     }
-    section p, section ul { font-size: 0.95rem; }
-    ul { padding-left: 1.5rem; }
-    ul li { margin-bottom: 0.4rem; }
+    .card-desc {
+      color: var(--c-text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Info Table */
+    .info-wrapper {
+      background: var(--c-surface);
+      border-radius: 24px;
+      padding: 3rem;
+      border: 1px solid var(--c-border);
+    }
     .info-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 0.95rem;
     }
     .info-table th, .info-table td {
-      text-align: left;
-      padding: 0.6rem 0.8rem;
-      border-bottom: 1px solid #e0e0e0;
+      padding: 1.5rem 1rem;
+      border-bottom: 1px solid var(--c-border);
+      font-family: var(--font-ja);
+    }
+    .info-table tr:last-child th, .info-table tr:last-child td {
+      border-bottom: none;
     }
     .info-table th {
-      width: 30%;
-      font-weight: 600;
-      white-space: nowrap;
+      width: 25%;
+      text-align: left;
+      color: var(--c-text-muted);
+      font-weight: 500;
     }
-    footer {
+    .info-table td {
+      font-weight: 500;
+    }
+    .info-table a {
+      color: var(--c-primary);
+      text-decoration: none;
+    }
+    .info-table a:hover { text-decoration: underline; }
+
+    /* Footer */
+    .footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 4rem 5%;
       text-align: center;
-      padding: 2rem 1rem;
-      font-size: 0.8rem;
-      color: #888;
-      border-top: 1px solid #e0e0e0;
+      font-size: 0.9rem;
     }
-    a { color: #0f3460; }
+    .footer-logo {
+      height: 40px;
+      margin-bottom: 1.5rem;
+      opacity: 0.5;
+      filter: grayscale(100%) brightness(200%);
+    }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .mission-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .info-wrapper { padding: 1.5rem; }
+      .info-table th, .info-table td { display: block; width: 100%; padding: 0.75rem 0; }
+      .info-table th { padding-bottom: 0; border-bottom: none; }
+    }
   </style>
 </head>
 <body>
 
-<header>
-  <h1>MaSIC — 一般社団法人 数理社会実装教育研究センター</h1>
-  <div class="logo-card">
-    <img
-      src="logo.png"
-      alt="MaSIC"
-      width="560"
-      height="537"
-      decoding="async"
-    >
-  </div>
-  <p class="subtitle">一般社団法人 数理社会実装教育研究センター</p>
-  <p class="subtitle" style="margin-top:0.3rem; font-size:0.85rem;">
-    Mathematics for Social Implementation Center
-  </p>
-</header>
+  <!-- Sticky Navigation -->
+  <nav class="nav">
+    <a href="#" class="nav-brand">
+      <img src="logo.png" alt="MaSIC Logo" class="nav-logo">
+      <span class="nav-title">MaSIC</span>
+    </a>
+    <a href="mailto:info@masic.jp" class="nav-contact">お問い合わせ</a>
+  </nav>
 
-<main>
-  <section>
-    <h2>設立準備中</h2>
-    <p>
-      MaSIC（一般社団法人 数理社会実装教育研究センター）は現在、設立手続きを進めています。
-      詳細が決まり次第、本ページで順次公開してまいります。
-    </p>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">設立準備中</div>
+        <h1 class="hero-title">数学を、<br><span>社会の基盤</span>へ。</h1>
+        <p class="hero-desc">
+          一般社団法人 数理社会実装教育研究センター（MaSIC）は、数学を「研究室の中の知」から「社会で機能する基盤」へ引き上げ、数学を武器に課題を解く人材を育成します。
+        </p>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>ミッション</h2>
-    <p>
-      数学を「研究室の中の知」から「社会で機能する基盤」へ引き上げ、
-      数学を武器に課題を解く人材を育成することを目指しています。
-    </p>
+  <!-- Mission Section -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="mission-grid">
+        <div class="section-header reveal">
+          <span class="section-label">Mission</span>
+          <h2 class="section-title">ミッション</h2>
+        </div>
+        <div class="mission-text reveal">
+          <p>数学は、あらゆる科学技術と社会システムの根底を支える普遍的な言語です。</p>
+          <p>私たちは、高度な数学的知見を学術の枠にとどめず、実社会の複雑な課題解決へと直接的に接続する「社会実装」を推進します。</p>
+          <p>次世代の才能を発掘し、産学官の垣根を越えた連携を生み出すことで、数学が真に機能するエコシステムを構築します。</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>主な事業（予定）</h2>
-    <ul>
-      <li>数学の才能発掘・教育プログラム</li>
-      <li>社会実装ワークショップ・セミナー</li>
-      <li>産学連携の推進・コミュニティ運営</li>
-    </ul>
+  <!-- Activities Section -->
+  <section class="section" style="background: var(--c-surface);">
+    <div class="section-inner">
+      <div class="section-header reveal" style="text-align: center;">
+        <span class="section-label">Activities</span>
+        <h2 class="section-title">主な事業（予定）</h2>
+      </div>
+      <div class="cards-grid">
+        <div class="card reveal">
+          <div class="card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+          </div>
+          <h3 class="card-title">才能発掘・教育プログラム</h3>
+          <p class="card-desc">次世代を担う若き才能を見出し、実践的なプロジェクトベースの学習を通じて、数学を用いて未知の課題に挑む力を育成します。</p>
+        </div>
+        <div class="card reveal" style="transition-delay: 0.1s;">
+          <div class="card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+          </div>
+          <h3 class="card-title">社会実装ワークショップ</h3>
+          <p class="card-desc">企業や自治体が抱える実際の課題を題材に、数理モデルや最適化手法を用いて解決策を導き出す実践的なセミナーを開催します。</p>
+        </div>
+        <div class="card reveal" style="transition-delay: 0.2s;">
+          <div class="card-icon">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
+          </div>
+          <h3 class="card-title">産学連携・コミュニティ</h3>
+          <p class="card-desc">研究者、学生、企業を繋ぐ中立的なハブとして機能し、継続的な知の交流と共同研究を促進するコミュニティを運営します。</p>
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section>
-    <h2>法人情報</h2>
-    <table class="info-table">
-      <tr><th>名称</th><td>一般社団法人 数理社会実装教育研究センター（MaSIC）</td></tr>
-      <tr><th>連絡先</th><td><a href="mailto:info@masic.jp">info@masic.jp</a></td></tr>
-    </table>
+  <!-- Information Section -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header reveal" style="text-align: center;">
+        <span class="section-label">Information</span>
+        <h2 class="section-title">法人情報</h2>
+      </div>
+      <div class="info-wrapper reveal">
+        <table class="info-table">
+          <tr>
+            <th>名称</th>
+            <td>一般社団法人 数理社会実装教育研究センター<br><span style="color:var(--c-text-muted); font-size:0.9em; font-family:var(--font-en);">Mathematics for Social Implementation Center (MaSIC)</span></td>
+          </tr>
+          <tr>
+            <th>ステータス</th>
+            <td>設立準備中</td>
+          </tr>
+          <tr>
+            <th>連絡先</th>
+            <td><a href="mailto:info@masic.jp">info@masic.jp</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </section>
-</main>
 
-<footer>
-  &copy; 2026 MaSIC — 一般社団法人 数理社会実装教育研究センター
-</footer>
+  <!-- Footer -->
+  <footer class="footer">
+    <img src="logo.png" alt="MaSIC" class="footer-logo">
+    <p>&copy; 2026 Mathematics for Social Implementation Center. All rights reserved.</p>
+  </footer>
 
+  <script>
+    // Scroll Reveal Animation
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.15
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('.reveal').forEach((element) => {
+      observer.observe(element);
+    });
+  </script>
 </body>
 </html>
