@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>特定商取引法に基づく表記 — 一般社団法人 数理社会実装教育研究センター（MaSIC）</title>
+  <meta name="robots" content="index,follow">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-bg: #ffffff;
+      --c-text: #0f172a;
+      --c-text-muted: #64748b;
+      --c-primary: #0ea5e9;
+      --c-primary-dark: #0284c7;
+      --c-surface: #f8fafc;
+      --c-border: #e2e8f0;
+      --font-en: 'Inter', sans-serif;
+      --font-ja: 'Noto Sans JP', sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-en);
+      color: var(--c-text);
+      background-color: var(--c-bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    h1, h2, h3 {
+      font-family: var(--font-ja);
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    p { font-family: var(--font-ja); }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      z-index: 1000;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--c-text);
+    }
+    .nav-logo { height: 40px; width: auto; }
+    .nav-title {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+    }
+    .nav-back {
+      font-family: var(--font-ja);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-text);
+      text-decoration: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid var(--c-border);
+      transition: all 0.3s;
+    }
+    .nav-back:hover {
+      background: var(--c-text);
+      color: #fff;
+      border-color: var(--c-text);
+    }
+
+    main {
+      flex: 1;
+      padding: 6rem 5% 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.06) 0%, transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(2, 132, 199, 0.04) 0%, transparent 40%);
+      z-index: -1;
+    }
+
+    .page {
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .page-label {
+      font-family: var(--font-en);
+      font-weight: 800;
+      color: var(--c-primary);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .page-title {
+      font-size: clamp(1.5rem, 3.5vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--c-text);
+      letter-spacing: 0.02em;
+    }
+    .page-intro {
+      font-family: var(--font-ja);
+      font-size: 0.95rem;
+      color: var(--c-text);
+      line-height: 1.8;
+      margin-bottom: 2rem;
+    }
+    .info-note {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--c-text-muted);
+      font-weight: 400;
+    }
+    .info-table td ul {
+      margin: 0.5rem 0 0;
+      padding-left: 1.25rem;
+    }
+    .info-table td li {
+      margin-bottom: 0.35rem;
+    }
+    .info-table td p + p {
+      margin-top: 0.75rem;
+    }
+
+    .info-wrapper {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+    }
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .info-table th, .info-table td {
+      padding: 1.25rem 1rem;
+      border-bottom: 1px solid var(--c-border);
+      font-family: var(--font-ja);
+      font-size: 0.95rem;
+      vertical-align: top;
+    }
+    .info-table tr:last-child th, .info-table tr:last-child td {
+      border-bottom: none;
+    }
+    .info-table th {
+      width: 32%;
+      text-align: left;
+      color: var(--c-text-muted);
+      font-weight: 500;
+    }
+    .info-table td {
+      font-weight: 500;
+    }
+    .info-table a {
+      color: var(--c-primary);
+      text-decoration: none;
+    }
+    .info-table a:hover { text-decoration: underline; }
+
+    .footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 3rem 5%;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .footer-logo {
+      height: 36px;
+      margin-bottom: 1.25rem;
+      opacity: 0.5;
+      filter: grayscale(100%) brightness(200%);
+    }
+    .footer-links {
+      margin-bottom: 1rem;
+    }
+    .footer-links a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-family: var(--font-ja);
+    }
+    .footer-links a:hover {
+      color: #cbd5e1;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      .info-wrapper { padding: 1.5rem; }
+      .info-table th, .info-table td { display: block; width: 100%; padding: 0.75rem 0; }
+      .info-table th { padding-bottom: 0; border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">
+      <img src="logo-icon.png" alt="MaSIC Logo" class="nav-logo">
+      <span class="nav-title">MaSIC</span>
+    </a>
+    <a href="index.html" class="nav-back">トップへ戻る</a>
+  </nav>
+
+  <main>
+    <div class="bg"></div>
+    <div class="page">
+      <span class="page-label">Legal</span>
+      <h1 class="page-title">特定商取引法に基づく表記</h1>
+      <p class="page-intro">当法人が主催・運営する「学会・セミナー・研究会」等の参加登録費および受講料の取引条件について、特定商取引法に基づき以下に開示いたします。</p>
+      <div class="info-wrapper">
+        <table class="info-table">
+          <tr>
+            <th>販売事業者名</th>
+            <td>一般社団法人 数理社会実装教育研究センター（MaSIC）</td>
+          </tr>
+          <tr>
+            <th>代表者</th>
+            <td>代表理事 田中 一成</td>
+          </tr>
+          <tr>
+            <th>所在地</th>
+            <td>〒169-0075 東京都新宿区高田馬場１丁目１番１５－１１０２号</td>
+          </tr>
+          <tr>
+            <th>電話番号</th>
+            <td>請求があった場合、申込み前に十分な時間的余裕をもって、遅滞なく電子メールにより開示いたします。下記メールアドレスよりご請求ください。</td>
+          </tr>
+          <tr>
+            <th>メールアドレス</th>
+            <td><a href="mailto:info@masic.jp">info@masic.jp</a></td>
+          </tr>
+          <tr>
+            <th>参加費・受講料</th>
+            <td>各学会・セミナー・研究会等の案内ページ、申込ページ、または案内資料に、消費税を含む総額で表示します。</td>
+          </tr>
+          <tr>
+            <th>申込期間・申込期限</th>
+            <td>各学会・セミナー・研究会等の案内ページ、申込ページ、または案内資料に記載します。</td>
+          </tr>
+          <tr>
+            <th>参加費以外の必要料金</th>
+            <td>
+              <ul>
+                <li>銀行振込時の振込手数料（銀行振込対応イベントで、振込を選択された場合）</li>
+                <li>その他必要料金がある場合は、各案内ページ、申込ページ、または案内資料に記載します。</li>
+              </ul>
+            </td>
+          </tr>
+          <tr>
+            <th>お支払い方法・時期</th>
+            <td>
+              <p><strong>【クレジットカード】</strong><br>オンラインでのお申し込み完了時に決済されます。</p>
+              <p><strong>【銀行振込】（対応イベントのみ）</strong><br>お申し込み後に送付される案内メールに記載された指定口座へ、指定期日までにお振込みください。</p>
+              <p><strong>【当日現地払い（現金等）】（対応イベントのみ）</strong><br>イベント当日に会場の受付窓口にてお支払いください。</p>
+            </td>
+          </tr>
+          <tr>
+            <th>サービスの提供時期</th>
+            <td>お申し込み対象の学会・セミナー・研究会等の開催日、開催期間、または配信期間に提供します。詳細は各案内ページ、申込ページ、または案内資料に記載します。</td>
+          </tr>
+          <tr>
+            <th>キャンセル・返金について</th>
+            <td>
+              <p>お支払い完了後、お客様（参加者）都合によるキャンセルおよび返金は原則としてお受けできません。</p>
+              <p>ただし、各学会・セミナー・研究会等の案内ページ、申込ページ、または案内資料に別途キャンセルポリシーを定める場合は、その定めを優先します。</p>
+              <p><strong>【イベントの中止・延期について】</strong><br>天災地変、感染症拡大、交通機関の障害、講師・主催者の都合その他やむを得ない事情によりイベントを中止する場合は、参加料を返金いたします。イベントを延期する場合は、代替日程をご案内し、代替日程への参加が困難な場合には参加料を返金いたします。</p>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </main>
+
+  <div id="site-footer">
+    <noscript>
+      <footer class="footer">
+        <img src="logo-full.png" alt="MaSIC" class="footer-logo">
+        <p class="footer-links">
+          <a href="houjin.html">法人情報</a>
+          <span aria-hidden="true"> · </span>
+          <a href="koukoku/index.html">電子公告</a>
+          <span aria-hidden="true"> · </span>
+          <a href="tokushoho.html">特定商取引法に基づく表記</a>
+        </p>
+        <p>&copy; 2026 Mathematics for Social Implementation Center. All rights reserved.</p>
+      </footer>
+    </noscript>
+  </div>
+  <script src="footer.js"></script>
+
+</body>
+</html>

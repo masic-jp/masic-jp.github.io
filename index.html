@@ -275,6 +275,19 @@
       opacity: 0.5;
       filter: grayscale(100%) brightness(200%);
     }
+    .footer-links {
+      margin-bottom: 1rem;
+    }
+    .footer-links a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-family: var(--font-ja);
+    }
+    .footer-links a:hover {
+      color: #cbd5e1;
+      text-decoration: underline;
+    }
 
     /* Animations */
     @keyframes fadeUp {
@@ -374,49 +387,23 @@
     </div>
   </section>
 
-  <!-- Information Section -->
-  <section class="section">
-    <div class="section-inner">
-      <div class="section-header reveal" style="text-align: center;">
-        <span class="section-label">Information</span>
-        <h2 class="section-title">法人情報</h2>
-      </div>
-      <div class="info-wrapper reveal">
-        <table class="info-table">
-          <tr>
-            <th>名称</th>
-            <td>一般社団法人 数理社会実装教育研究センター<br><span style="color:var(--c-text-muted); font-size:0.9em; font-family:var(--font-en);">Mathematics for Social Implementation Center (MaSIC)</span></td>
-          </tr>
-          <tr>
-            <th>法人番号</th>
-            <td>8011105011832</td>
-          </tr>
-          <tr>
-            <th>設立</th>
-            <td>2026年4月</td>
-          </tr>
-          <tr>
-            <th>代表理事</th>
-            <td>田中 一成</td>
-          </tr>
-          <tr>
-            <th>所在地</th>
-            <td>東京都新宿区高田馬場１丁目</td>
-          </tr>
-          <tr>
-            <th>連絡先</th>
-            <td><a href="mailto:info@masic.jp">info@masic.jp</a></td>
-          </tr>
-        </table>
-      </div>
-    </div>
-  </section>
-
   <!-- Footer -->
-  <footer class="footer">
-    <img src="logo-full.png" alt="MaSIC" class="footer-logo">
-    <p>&copy; 2026 Mathematics for Social Implementation Center. All rights reserved.</p>
-  </footer>
+  <div id="site-footer">
+    <noscript>
+      <footer class="footer">
+        <img src="logo-full.png" alt="MaSIC" class="footer-logo">
+        <p class="footer-links">
+          <a href="houjin.html">法人情報</a>
+          <span aria-hidden="true"> · </span>
+          <a href="koukoku/index.html">電子公告</a>
+          <span aria-hidden="true"> · </span>
+          <a href="tokushoho.html">特定商取引法に基づく表記</a>
+        </p>
+        <p>&copy; 2026 Mathematics for Social Implementation Center. All rights reserved.</p>
+      </footer>
+    </noscript>
+  </div>
+  <script src="footer.js"></script>
 
   <script>
     // Scroll Reveal Animation
