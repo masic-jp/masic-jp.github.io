@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>論文の形式化 — 数学の論文を Lean 4 の Repository に | MaSIC</title>
+  <meta name="description" content="数学の論文・プレプリントを Lean 4 / mathlib で形式化し、Lean 4 の Repository としてお渡しする、アカデミック向けの形式化支援サービスです。一般社団法人 数理社会実装教育研究センター（MaSIC）が提供します。">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c-bg: #ffffff;
+      --c-text: #0f172a;
+      --c-text-muted: #64748b;
+      --c-primary: #0ea5e9;
+      --c-primary-dark: #0284c7;
+      --c-surface: #f8fafc;
+      --c-border: #e2e8f0;
+      --font-en: 'Inter', sans-serif;
+      --font-ja: 'Noto Sans JP', sans-serif;
+      --w-page: 1080px;
+      --w-text: 68ch;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-en);
+      color: var(--c-text);
+      background-color: var(--c-bg);
+      line-height: 1.8;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+    .overview-grid > *, .sec-head > *, .steps > *, .scope > *, .trust > *, .cta > * { min-width: 0; }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-ja);
+      line-height: 1.35;
+      font-weight: 700;
+    }
+    p, li, dt, dd, summary { font-family: var(--font-ja); }
+    a { color: inherit; }
+
+    /* ---------- Nav（サイト共通） ---------- */
+    .nav {
+      position: sticky;
+      top: 0;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      z-index: 1000;
+    }
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--c-text);
+    }
+    .nav-logo { height: 40px; width: auto; }
+    .nav-title {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.05em;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 0.75rem; }
+    .nav-back {
+      font-family: var(--font-ja);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-text);
+      text-decoration: none;
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid var(--c-border);
+      transition: all 0.3s;
+    }
+    .nav-back:hover {
+      background: var(--c-text);
+      color: #fff;
+      border-color: var(--c-text);
+    }
+    .nav-contact {
+      font-family: var(--font-ja);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--c-text);
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-contact:hover { background: var(--c-primary); }
+
+    /* ---------- Layout ---------- */
+    main { flex: 1; }
+    .container {
+      max-width: var(--w-page);
+      margin: 0 auto;
+      padding: 0 5%;
+      width: 100%;
+    }
+    .section { padding: 5.5rem 0; }
+    .section + .section { border-top: 1px solid var(--c-border); }
+    .section--surface { background: var(--c-surface); }
+
+    .sec-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+      gap: 2rem 4rem;
+      margin-bottom: 3rem;
+      align-items: start;
+    }
+    .sec-index {
+      display: block;
+      font-family: var(--font-en);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      color: var(--c-primary-dark);
+      margin-bottom: 0.75rem;
+    }
+    .sec-title {
+      font-size: clamp(1.5rem, 2.6vw, 1.875rem);
+      letter-spacing: 0.01em;
+    }
+    .sec-desc {
+      font-size: 1.05rem;
+      color: var(--c-text);
+      max-width: var(--w-text);
+      padding-top: 2rem;
+    }
+    .sec-desc p + p { margin-top: 1rem; }
+    .muted { color: var(--c-text-muted); }
+
+    /* ---------- Hero ---------- */
+    .hero { padding: 5rem 0 5.5rem; }
+    .hero-copy { max-width: 780px; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-family: var(--font-ja);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--c-text-muted);
+      margin-bottom: 1.75rem;
+    }
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--c-primary);
+      display: inline-block;
+    }
+    .hero-title {
+      font-family: var(--font-ja);
+      font-size: clamp(2.25rem, 4.5vw, 3.25rem);
+      font-weight: 900;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      margin-bottom: 1.25rem;
+    }
+    .hero-promise {
+      font-size: clamp(1.25rem, 2.2vw, 1.5rem);
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      max-width: 24em;
+    }
+    .hero-lead {
+      font-size: 1.05rem;
+      color: var(--c-text);
+      max-width: var(--w-text);
+      margin-bottom: 2.25rem;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem 1rem; align-items: center; }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-ja);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-decoration: none;
+      padding: 0.85rem 1.5rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      transition: all 0.25s;
+    }
+    .btn-primary { background: var(--c-text); color: #fff; }
+    .btn-primary:hover { background: var(--c-primary-dark); }
+    .btn-ghost { border-color: var(--c-border); color: var(--c-text); }
+    .btn-ghost:hover { border-color: var(--c-text); }
+
+    /* ---------- Overview（hero 直下・全幅） ---------- */
+    .overview {
+      margin-top: 4rem;
+      border: 1px solid var(--c-border);
+      border-radius: 24px;
+      background: var(--c-surface);
+      padding: 2.5rem 3rem 2.75rem;
+    }
+    .overview-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .overview-head h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .overview-head span {
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--c-text-muted);
+    }
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.25rem 3rem;
+    }
+    .ov-item dt {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-text-muted);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .ov-item dt::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--c-primary);
+      flex: none;
+    }
+    .ov-item dd {
+      font-size: 1.2rem;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+    .ov-item .sub {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--c-text-muted);
+      margin-top: 0.5rem;
+    }
+    .tba {
+      display: inline-block;
+      font-family: var(--font-en);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      color: var(--c-text-muted);
+      border: 1px solid var(--c-border);
+      border-radius: 8px;
+      padding: 0.15rem 0.6rem;
+      vertical-align: middle;
+      background: #fff;
+    }
+
+    /* ---------- Process ---------- */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 2.5rem;
+    }
+    .step {
+      border-top: 2px solid var(--c-text);
+      padding-top: 1.5rem;
+    }
+    .step-num {
+      font-family: var(--font-en);
+      font-weight: 800;
+      font-size: 2.25rem;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--c-primary);
+      margin-bottom: 1rem;
+    }
+    .step h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
+    .step p { font-size: 0.98rem; color: var(--c-text); }
+    .step .who {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--c-text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    /* ---------- Scope ---------- */
+    .scope {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2rem;
+    }
+    .scope-col {
+      background: #fff;
+      border: 1px solid var(--c-border);
+      border-radius: 20px;
+      padding: 2rem 2rem 1.5rem;
+    }
+    .scope-col h3 {
+      font-size: 1.1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.9rem;
+      border-bottom: 1px solid var(--c-border);
+    }
+    .scope-col ul { list-style: none; }
+    .scope-col li {
+      position: relative;
+      padding-left: 1.75rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.98rem;
+    }
+    .scope-col li::before {
+      position: absolute;
+      left: 0;
+      top: 0.05rem;
+      font-family: var(--font-en);
+      font-weight: 700;
+    }
+    .scope-yes li::before { content: "✓"; color: var(--c-primary-dark); }
+    .scope-no li::before { content: "—"; color: var(--c-text-muted); }
+    .scope-col li .sub {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--c-text-muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ---------- Options ---------- */
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 3rem;
+    }
+    .option {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 0 1rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--c-border);
+    }
+    .option-mark {
+      font-family: var(--font-en);
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--c-primary-dark);
+      letter-spacing: 0.08em;
+      padding-top: 0.35rem;
+    }
+    .option dt { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .option dd { font-size: 0.95rem; color: var(--c-text-muted); }
+
+    /* ---------- Trust ---------- */
+    .trust {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 2.5rem 4rem;
+    }
+    .trust h3 { font-size: 1.1rem; margin-bottom: 0.6rem; }
+    .trust p { font-size: 0.98rem; }
+    .trust p + p { margin-top: 0.75rem; }
+
+    /* ---------- FAQ ---------- */
+    .faq { max-width: 820px; }
+    .faq details { border-top: 1px solid var(--c-border); }
+    .faq details:last-child { border-bottom: 1px solid var(--c-border); }
+    .faq summary {
+      list-style: none;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding: 1.25rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: "+";
+      font-family: var(--font-en);
+      font-weight: 500;
+      font-size: 1.4rem;
+      line-height: 1;
+      color: var(--c-text-muted);
+      flex: none;
+      transition: transform 0.25s;
+    }
+    .faq details[open] summary::after { content: "–"; }
+    .faq .answer { padding: 0 0 1.5rem; font-size: 0.98rem; max-width: var(--w-text); }
+    .faq .answer p + p { margin-top: 0.75rem; }
+
+    /* ---------- CTA ---------- */
+    .cta {
+      border: 1px solid var(--c-border);
+      border-radius: 24px;
+      padding: 3rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 2rem 4rem;
+      align-items: center;
+      background: #fff;
+    }
+    .cta h2 { font-size: clamp(1.4rem, 2.4vw, 1.75rem); margin-bottom: 0.75rem; }
+    .cta p { font-size: 1rem; }
+    .cta p + p { margin-top: 0.6rem; }
+    .cta-side { display: grid; gap: 0.9rem; justify-items: start; }
+    .cta-side .small { font-size: 0.85rem; color: var(--c-text-muted); }
+    .provider {
+      margin-top: 2.5rem;
+      font-size: 0.85rem;
+      color: var(--c-text-muted);
+      text-align: center;
+    }
+    .provider a { color: var(--c-text-muted); }
+
+    /* ---------- Footer（サイト共通） ---------- */
+    .footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 3rem 5%;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    .footer-logo {
+      height: 36px;
+      margin-bottom: 1.25rem;
+      opacity: 0.5;
+      filter: grayscale(100%) brightness(200%);
+    }
+    .footer-links { margin-bottom: 1rem; }
+    .footer-links a {
+      color: #64748b;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-family: var(--font-ja);
+    }
+    .footer-links a:hover { color: #cbd5e1; text-decoration: underline; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 900px) {
+      .sec-head, .steps, .scope, .options, .trust, .cta { grid-template-columns: 1fr; }
+      .overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 2.5rem; }
+      .overview { padding: 2rem 1.75rem 2.25rem; margin-top: 3rem; }
+      .sec-head { gap: 1rem; margin-bottom: 2rem; }
+      .sec-desc { padding-top: 0; }
+      .section { padding: 4rem 0; }
+      .hero { padding: 3.5rem 0 4rem; }
+      .cta { padding: 2rem 1.5rem; }
+      .nav-back { display: none; }
+    }
+    @media (max-width: 560px) {
+      .overview-grid { grid-template-columns: 1fr; gap: 1.75rem; }
+      .overview { padding: 1.75rem 1.25rem 2rem; }
+      .overview-head { flex-direction: column; gap: 0.25rem; }
+      .scope-col { padding: 1.5rem 1.25rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand">
+      <img src="../logo-icon.png" alt="MaSIC Logo" class="nav-logo">
+      <span class="nav-title">MaSIC</span>
+    </a>
+    <div class="nav-actions">
+      <a href="../index.html" class="nav-back">トップへ戻る</a>
+      <a href="mailto:info@masic.jp" class="nav-contact">お問い合わせ</a>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <div class="hero-copy">
+          <span class="eyebrow">MaSIC 研究支援サービス</span>
+          <h1 class="hero-title">論文の形式化</h1>
+          <p class="hero-promise">数学の論文を、Lean 4 の Repository に。</p>
+          <p class="hero-lead">数学の研究論文・プレプリントをお渡しいただき、その内容を Lean 4 / mathlib で形式化します。作業を終えた時点の Lean 4 の Repository を、形式化できた範囲と残った箇所の説明とともにお渡しします。Lean の環境構築や周辺のソフトウェア工学は、依頼者側では不要です。</p>
+          <div class="hero-actions">
+            <a href="mailto:info@masic.jp?subject=%5B%E8%AB%96%E6%96%87%E3%81%AE%E5%BD%A2%E5%BC%8F%E5%8C%96%5D%20%E3%81%94%E7%9B%B8%E8%AB%87" class="btn btn-primary">メールで相談する</a>
+            <a href="#process" class="btn btn-ghost">進め方を見る</a>
+          </div>
+        </div>
+
+        <section class="overview" aria-labelledby="overview-title">
+          <div class="overview-head">
+            <h2 id="overview-title">サービス概要</h2>
+            <span>Overview</span>
+          </div>
+          <dl class="overview-grid">
+            <div class="ov-item">
+              <dt>対象</dt>
+              <dd>数学の研究論文・プレプリント<span class="sub">大学・研究機関等でのアカデミックな研究に限ります。</span></dd>
+            </div>
+            <div class="ov-item">
+              <dt>ツール</dt>
+              <dd>Lean 4 / mathlib<span class="sub">依頼者側に Lean の環境や予備知識は必要ありません。</span></dd>
+            </div>
+            <div class="ov-item">
+              <dt>納品物</dt>
+              <dd>作業を終えた時点の Lean 4 の Repository 一式<span class="sub">形式化できた範囲と、残った箇所・止まった箇所（blocker）を明示します。</span></dd>
+            </div>
+            <div class="ov-item">
+              <dt>期間</dt>
+              <dd>最短 1〜3 営業日で納品<span class="sub">論文の内容や分量によっては、より長い期間をいただく場合があります。期間はご相談のうえ着手前に決めます。</span></dd>
+            </div>
+            <div class="ov-item">
+              <dt>料金</dt>
+              <dd><span class="tba">TBA</span><span class="sub">研究費の範囲で試していただける水準を想定しています。</span></dd>
+            </div>
+            <div class="ov-item">
+              <dt>お申込み</dt>
+              <dd><span class="tba">TBA</span><span class="sub">申込方法は準備中です。当面はメールでご相談ください。</span></dd>
+            </div>
+          </dl>
+        </section>
+      </div>
+    </section>
+
+    <!-- Who / why -->
+    <section class="section section--surface" id="for-whom">
+      <div class="container">
+        <div class="sec-head">
+          <div>
+            <span class="sec-index">01</span>
+            <h2 class="sec-title">形式化を、論文を渡すところから始める</h2>
+          </div>
+          <div class="sec-desc">
+            <p>自分の結果を Lean で形式化してみたい。しかし、Lean や mathlib の作法、ビルド環境、Repository の整備まで自分の手で行うには、時間も学習コストも重い。そうした研究者・数学者のためのサービスです。</p>
+            <p>依頼者にお願いするのは、論文またはプレプリントをお渡しいただくことだけです。Lean の予備知識は必要ありません。形式化がどこまで進み、どこで止まるのかを、実際の Repository で確かめていただけます。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Process -->
+    <section class="section" id="process">
+      <div class="container">
+        <div class="sec-head">
+          <div>
+            <span class="sec-index">02</span>
+            <h2 class="sec-title">進め方</h2>
+          </div>
+          <div class="sec-desc">
+            <p>作業期間はご相談のうえ着手前に決め、その中で形式化を進めます。最短 1〜3 営業日で納品しますが、論文の内容や分量によっては、より長い期間が必要になります。前後のご相談や納品後のご質問は、作業期間とは別に承ります。</p>
+          </div>
+        </div>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">1</div>
+            <span class="who">依頼者</span>
+            <h3>論文・プレプリントを渡す</h3>
+            <p>形式化したい数学の論文またはプレプリントをお送りください。全体ではなく、特に形式化したい定理や節があれば、あわせてお知らせください。</p>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <span class="who">MaSIC</span>
+            <h3>形式化する</h3>
+            <p>定義・主張・証明を Lean 4 / mathlib の上に組み立てていきます。決めた作業期間の中で形式化を進め、どこまで到達できたかを確認します。</p>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <span class="who">納品</span>
+            <h3>Lean 4 の Repository を受け取る</h3>
+            <p>作業を終えた時点の Repository 一式をお渡しします。形式化できた範囲と、残った部分・止まった箇所（blocker）を明示します。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scope -->
+    <section class="section section--surface" id="scope">
+      <div class="container">
+        <div class="sec-head">
+          <div>
+            <span class="sec-index">03</span>
+            <h2 class="sec-title">お渡しするものと、お約束の境界</h2>
+          </div>
+          <div class="sec-desc">
+            <p>限られた作業期間で到達できる範囲は、論文の内容と mathlib の整備状況に大きく依存します。そのため本サービスは、成果を「完全な形式化」ではなく「作業を終えた時点の結果を、状態を隠さずにお渡しすること」として定義しています。</p>
+          </div>
+        </div>
+        <div class="scope">
+          <div class="scope-col scope-yes">
+            <h3>お渡しするもの</h3>
+            <ul>
+              <li>作業を終えた時点の Lean 4 の Repository 一式</li>
+              <li>形式化できた定義・命題・証明の範囲の明示</li>
+              <li>残った部分と、進まなかった箇所（blocker）の明示<span class="sub">どこで、何が理由で止まったかをお伝えします。</span></li>
+            </ul>
+          </div>
+          <div class="scope-col scope-no">
+            <h3>お約束しないもの</h3>
+            <ul>
+              <li>論文全体の完全な形式化<span class="sub">作業期間内に完了しない場合があります。その場合も、到達点と残りを明示してお渡しします。</span></li>
+              <li>読みやすさを整えたリファクタリングや説明文書<span class="sub">基本の作業では形式化そのものを優先します。必要な場合はオプションとしてご相談ください。</span></li>
+              <li>納品後の追加作業<span class="sub">着手前に決めた作業期間を超える作業は含まれません。継続をご希望の場合は、納品後に別途ご相談ください。</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Options -->
+    <section class="section" id="options">
+      <div class="container">
+        <div class="sec-head">
+          <div>
+            <span class="sec-index">04</span>
+            <h2 class="sec-title">オプション</h2>
+          </div>
+          <div class="sec-desc">
+            <p>納品した Repository を土台に、次のような作業を別途ご相談いただけます。内容と条件は個別にご案内します。</p>
+          </div>
+        </div>
+        <dl class="options">
+          <div class="option">
+            <span class="option-mark">A</span>
+            <div>
+              <dt>リファクタリング</dt>
+              <dd>納品した Repository のコードを、読みやすく保守しやすい形に整理します。</dd>
+            </div>
+          </div>
+          <div class="option">
+            <span class="option-mark">B</span>
+            <div>
+              <dt>原論文との忠実性チェック</dt>
+              <dd>形式化された定義や主張が、原論文の内容を正しく写しているかを確認します。</dd>
+            </div>
+          </div>
+          <div class="option">
+            <span class="option-mark">C</span>
+            <div>
+              <dt>説明文書の作成</dt>
+              <dd>Repository の構成、原論文との対応、残った箇所の背景をまとめた文書を作成します。</dd>
+            </div>
+          </div>
+          <div class="option">
+            <span class="option-mark">D</span>
+            <div>
+              <dt>mathlib への upstream</dt>
+              <dd>汎用性のある部分を、mathlib へ提出できる形に整えます。</dd>
+            </div>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Trust -->
+    <section class="section section--surface" id="trust">
+      <div class="container">
+        <div class="sec-head">
+          <div>
+            <span class="sec-index">05</span>
+            <h2 class="sec-title">位置づけと、お預かりする論文の扱い</h2>
+          </div>
+          <div class="sec-desc">
+            <p>本サービスは、一般社団法人 数理社会実装教育研究センター（MaSIC）が、形式化を研究現場に持ち込みやすくするために提供する学術支援です。</p>
+          </div>
+        </div>
+        <div class="trust">
+          <div>
+            <h3>アカデミックな研究のために</h3>
+            <p>大学・研究機関等でのアカデミックな研究を対象としています。研究費の範囲で試していただける水準の料金を想定しており、具体的な金額は決まり次第ご案内します。</p>
+          </div>
+          <div>
+            <h3>未公開の内容をお預かりするにあたって</h3>
+            <p>プレプリントや投稿前の原稿など、未公開の内容をお預かりすることを前提に、プライバシーポリシーと機密保持契約を現在準備しています。</p>
+            <p>整い次第、本ページに掲載し、ご依頼の前に必ずご確認いただきます。それまでの間にご相談いただく場合も、内容の取り扱いについては事前にご説明します。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container">
+        <div class="sec-head">
+          <div>
+            <span class="sec-index">06</span>
+            <h2 class="sec-title">よくあるご質問</h2>
+          </div>
+          <div class="sec-desc">
+            <p>ご依頼の前に、期待値を合わせておきたい点をまとめました。</p>
+          </div>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>論文全体が形式化されますか。</summary>
+            <div class="answer">
+              <p>お約束はできません。到達できる範囲は、論文の内容と、必要な基礎がどこまで mathlib に整っているかに大きく依存します。作業期間内にどこまで進み、どこで止まったかを明示してお渡しします。</p>
+            </div>
+          </details>
+          <details>
+            <summary>Lean を知らなくても依頼できますか。</summary>
+            <div class="answer">
+              <p>できます。お願いするのは論文・プレプリントをお渡しいただくことだけで、Lean の環境構築や予備知識は必要ありません。納品する Repository の読み方については、納品時にご説明します。</p>
+            </div>
+          </details>
+          <details>
+            <summary>どのような論文が対象ですか。</summary>
+            <div class="answer">
+              <p>大学・研究機関等でのアカデミックな研究に関わる、数学の論文・プレプリントを対象としています。分野や内容によって到達できる範囲は変わりますので、ご相談の際に論文の概要をお知らせいただければ、事前に見通しをお伝えします。</p>
+            </div>
+          </details>
+          <details>
+            <summary>投稿前の原稿を渡しても大丈夫ですか。</summary>
+            <div class="answer">
+              <p>未公開の内容をお預かりすることを前提に、プライバシーポリシーと機密保持契約を準備しています。整い次第、本ページに掲載します。それまでにご相談いただく場合は、取り扱いについて事前にご説明したうえで進めます。</p>
+            </div>
+          </details>
+          <details>
+            <summary>納品後、形式化を続けてもらえますか。</summary>
+            <div class="answer">
+              <p>基本の作業には含まれませんが、継続作業やリファクタリング、説明文書の作成、mathlib への upstream などはオプションとして別途ご相談いただけます。</p>
+            </div>
+          </details>
+          <details>
+            <summary>料金と申込方法はいつ決まりますか。</summary>
+            <div class="answer">
+              <p>いずれも現在準備中（TBA）です。料金は研究費の範囲で試していただける水準を想定しています。決まり次第、本ページに掲載します。それまでは、メールでお問い合わせいただければ個別にご案内します。</p>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section section--surface" id="contact">
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h2>まずは、論文の概要からご相談を</h2>
+            <p>正式な申込方法は準備中ですが、ご関心のある方からのご相談はメールで受け付けています。対象となる論文やプレプリントの概要、特に形式化したい部分をお知らせいただければ、見通しをお伝えします。</p>
+          </div>
+          <div class="cta-side">
+            <a href="mailto:info@masic.jp?subject=%5B%E8%AB%96%E6%96%87%E3%81%AE%E5%BD%A2%E5%BC%8F%E5%8C%96%5D%20%E3%81%94%E7%9B%B8%E8%AB%87" class="btn btn-primary">info@masic.jp に相談する</a>
+            <span class="small">料金・申込方法・機密保持契約は準備中（TBA）です。決まり次第、本ページを更新します。</span>
+          </div>
+        </div>
+        <p class="provider">提供：一般社団法人 数理社会実装教育研究センター（MaSIC）　·　<a href="../index.html">法人トップページ</a></p>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer">
+    <noscript>
+      <footer class="footer">
+        <img src="../logo-full.png" alt="MaSIC" class="footer-logo">
+        <p class="footer-links">
+          <a href="../houjin.html">法人情報</a>
+          <span aria-hidden="true"> · </span>
+          <a href="../koukoku/index.html">電子公告</a>
+          <span aria-hidden="true"> · </span>
+          <a href="../tokushoho.html">特定商取引法に基づく表記</a>
+        </p>
+        <p>&copy; 2026 Mathematics for Social Implementation Center. All rights reserved.</p>
+      </footer>
+    </noscript>
+  </div>
+  <script src="../footer.js"></script>
+
+</body>
+</html>

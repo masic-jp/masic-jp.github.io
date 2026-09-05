@@ -21,6 +21,9 @@
   } else if (path.indexOf('/koukoku/') !== -1) {
     // 例: /koukoku/ のような 1 階層下のページ
     prefix = '../';
+  } else if (path.indexOf('/formalisation/') !== -1) {
+    // 例: /formalisation/ のような 1 階層下のページ
+    prefix = '../';
   }
 
   var el = document.getElementById('site-footer');
