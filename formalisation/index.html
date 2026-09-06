@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>論文の形式化 — 数学の論文を Lean 4 の Repository に | MaSIC</title>
-  <meta name="description" content="数学の論文・プレプリントを Lean 4 / mathlib で形式化し、Lean 4 の Repository としてお渡しする、アカデミック向けの形式化支援サービスです。一般社団法人 数理社会実装教育研究センター（MaSIC）が提供します。">
+  <meta name="description" content="数学の論文・プレプリントを Lean 4 / mathlib で形式化し、Lean 4 の Repository と報告書（PDF）としてお渡しする、アカデミック向けの形式化支援サービスです。初回は 1 論文あたり 50,000 円（税別）。一般社団法人 数理社会実装教育研究センター（MaSIC）が提供します。">
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
@@ -41,7 +41,7 @@
       flex-direction: column;
       overflow-x: hidden;
     }
-    .overview-grid > *, .sec-head > *, .steps > *, .scope > *, .trust > *, .cta > * { min-width: 0; }
+    .overview-grid > *, .sec-head > *, .steps > *, .scope > *, .pricing > *, .trust > *, .cta > * { min-width: 0; }
 
     h1, h2, h3, h4 {
       font-family: var(--font-ja);
@@ -274,18 +274,10 @@
       color: var(--c-text-muted);
       margin-top: 0.5rem;
     }
-    .tba {
-      display: inline-block;
+    .ov-item .num {
       font-family: var(--font-en);
-      font-size: 0.85rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--c-text-muted);
-      border: 1px solid var(--c-border);
-      border-radius: 8px;
-      padding: 0.15rem 0.6rem;
-      vertical-align: middle;
-      background: #fff;
+      font-weight: 800;
+      letter-spacing: -0.01em;
     }
 
     /* ---------- Process ---------- */
@@ -358,29 +350,92 @@
       margin-top: 0.15rem;
     }
 
-    /* ---------- Options ---------- */
-    .options {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0 3rem;
+    .scope-examples {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: var(--c-text-muted);
     }
-    .option {
+    .scope-examples a { color: var(--c-text); text-decoration: underline; text-underline-offset: 0.2em; }
+    .scope-examples a:hover { color: var(--c-primary-dark); }
+    .scope-examples .sep { margin: 0 0.6rem; }
+
+    /* ---------- Pricing ---------- */
+    .pricing {
       display: grid;
-      grid-template-columns: 2.5rem 1fr;
-      gap: 0 1rem;
-      padding: 1.5rem 0;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+      gap: 2rem 4rem;
+      align-items: start;
+    }
+    .price-card {
+      background: #fff;
+      border: 1px solid var(--c-border);
+      border-radius: 20px;
+      padding: 2rem 2rem 1.75rem;
+    }
+    .price-card .label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .price-card .amount {
+      font-family: var(--font-en);
+      font-weight: 800;
+      font-size: clamp(2.25rem, 4vw, 2.75rem);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .price-card .amount small {
+      font-family: var(--font-ja);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0;
+      margin-left: 0.35rem;
+    }
+    .price-card .unit {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      margin-top: 0.4rem;
+      margin-bottom: 1.25rem;
+    }
+    .price-card p { font-size: 0.95rem; color: var(--c-text-muted); }
+    .price-card p + p { margin-top: 0.5rem; }
+    .price-terms { display: grid; }
+    .price-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.25rem 2rem;
+      align-items: start;
+      padding: 1.1rem 0;
       border-top: 1px solid var(--c-border);
     }
-    .option-mark {
-      font-family: var(--font-en);
-      font-weight: 600;
-      font-size: 0.8rem;
-      color: var(--c-primary-dark);
-      letter-spacing: 0.08em;
-      padding-top: 0.35rem;
+    .price-row:last-child { border-bottom: 1px solid var(--c-border); }
+    .price-row dt { font-size: 1rem; font-weight: 700; }
+    .price-row dt .sub {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--c-text-muted);
+      margin-top: 0.15rem;
     }
-    .option dt { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.3rem; }
-    .option dd { font-size: 0.95rem; color: var(--c-text-muted); }
+    .price-row dd {
+      font-family: var(--font-en);
+      font-weight: 700;
+      font-size: 1.05rem;
+      white-space: nowrap;
+      text-align: right;
+    }
+    .price-row dd .ja { font-family: var(--font-ja); font-weight: 600; font-size: 0.95rem; }
+    .price-group {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--c-primary-dark);
+      padding: 1.75rem 0 0.6rem;
+    }
+    .price-group:first-child { padding-top: 0; }
 
     /* ---------- Trust ---------- */
     .trust {
@@ -471,7 +526,7 @@
 
     /* ---------- Responsive ---------- */
     @media (max-width: 900px) {
-      .sec-head, .steps, .scope, .options, .trust, .cta { grid-template-columns: 1fr; }
+      .sec-head, .steps, .scope, .pricing, .trust, .cta { grid-template-columns: 1fr; }
       .overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 2.5rem; }
       .overview { padding: 2rem 1.75rem 2.25rem; margin-top: 3rem; }
       .sec-head { gap: 1rem; margin-bottom: 2rem; }
@@ -486,6 +541,10 @@
       .overview { padding: 1.75rem 1.25rem 2rem; }
       .overview-head { flex-direction: column; gap: 0.25rem; }
       .scope-col { padding: 1.5rem 1.25rem 1rem; }
+      .price-card { padding: 1.5rem 1.25rem 1.25rem; }
+      .price-row { grid-template-columns: 1fr; gap: 0.35rem; }
+      .price-row dd { text-align: left; white-space: normal; }
+      .scope-examples .sep { display: block; height: 0.35rem; }
     }
   </style>
 </head>
@@ -511,10 +570,11 @@
           <span class="eyebrow">MaSIC 研究支援サービス</span>
           <h1 class="hero-title">論文の形式化</h1>
           <p class="hero-promise">数学の論文を、Lean 4 の Repository に。</p>
-          <p class="hero-lead">数学の研究論文・プレプリントをお渡しいただき、その内容を Lean 4 / mathlib で形式化します。作業を終えた時点の Lean 4 の Repository を、形式化できた範囲と残った箇所の説明とともにお渡しします。Lean の環境構築や周辺のソフトウェア工学は、依頼者側では不要です。</p>
+          <p class="hero-lead">数学の研究論文・プレプリントをお渡しいただき、その内容を Lean 4 / mathlib で形式化します。作業を終えた時点の Lean 4 の Repository と、証明済み・未完了の区別や残った課題をまとめた報告書（PDF）をお渡しします。Lean の環境構築や周辺のソフトウェア工学は、依頼者側では不要です。</p>
           <div class="hero-actions">
-            <a href="mailto:info@masic.jp?subject=%5B%E8%AB%96%E6%96%87%E3%81%AE%E5%BD%A2%E5%BC%8F%E5%8C%96%5D%20%E3%81%94%E7%9B%B8%E8%AB%87" class="btn btn-primary">メールで相談する</a>
-            <a href="#process" class="btn btn-ghost">進め方を見る</a>
+            <a href="#apply" class="btn btn-primary">申し込む</a>
+            <a href="mailto:info@masic.jp?subject=%5B%E8%AB%96%E6%96%87%E3%81%AE%E5%BD%A2%E5%BC%8F%E5%8C%96%5D%20%E3%81%94%E7%9B%B8%E8%AB%87" class="btn btn-ghost">メールで相談する（無料）</a>
+            <a href="#pricing" class="btn btn-ghost">料金・期間を見る</a>
           </div>
         </div>
 
@@ -529,24 +589,24 @@
               <dd>数学の研究論文・プレプリント<span class="sub">大学・研究機関等でのアカデミックな研究に限ります。</span></dd>
             </div>
             <div class="ov-item">
-              <dt>ツール</dt>
-              <dd>Lean 4 / mathlib<span class="sub">依頼者側に Lean の環境や予備知識は必要ありません。</span></dd>
+              <dt>手段</dt>
+              <dd>Lean 4 / mathlib<span class="sub">MaSIC が開発した AI エージェントによる作業ルーチンで形式化します。依頼者側に Lean の環境や予備知識は必要ありません。</span></dd>
             </div>
             <div class="ov-item">
               <dt>納品物</dt>
-              <dd>作業を終えた時点の Lean 4 の Repository 一式<span class="sub">形式化できた範囲と、残った箇所・止まった箇所（blocker）を明示します。</span></dd>
+              <dd>Repository（zip）と報告書（PDF）<span class="sub">証明済み／未完了の区別と残った課題を、報告書に明記します。</span></dd>
             </div>
             <div class="ov-item">
               <dt>期間</dt>
-              <dd>最短 1〜3 営業日で納品<span class="sub">論文の内容や分量によっては、より長い期間をいただく場合があります。期間はご相談のうえ着手前に決めます。</span></dd>
+              <dd>作業開始から <span class="num">7</span> 日以内に納品<span class="sub">標準料金では作業を 72 時間で打ち切ります。具体的な納品日は、ご依頼ごとにお伝えします。</span></dd>
             </div>
             <div class="ov-item">
               <dt>料金</dt>
-              <dd><span class="tba">TBA</span><span class="sub">研究費の範囲で試していただける水準を想定しています。</span></dd>
+              <dd><span class="num">50,000</span> 円（税別）／ 1 論文<span class="sub">初回の料金です。論文 1 本を対象に形式化を進める料金で、完全な形式化は保証しません。</span></dd>
             </div>
             <div class="ov-item">
-              <dt>お申込み</dt>
-              <dd><span class="tba">TBA</span><span class="sub">申込方法は準備中です。当面はメールでご相談ください。</span></dd>
+              <dt>ご相談・お申込み</dt>
+              <dd>メールで受け付け（事前相談は無料）<span class="sub">論文の概要と、特に形式化したい部分をお知らせください。</span></dd>
             </div>
           </dl>
         </section>
@@ -563,7 +623,7 @@
           </div>
           <div class="sec-desc">
             <p>自分の結果を Lean で形式化してみたい。しかし、Lean や mathlib の作法、ビルド環境、Repository の整備まで自分の手で行うには、時間も学習コストも重い。そうした研究者・数学者のためのサービスです。</p>
-            <p>依頼者にお願いするのは、論文またはプレプリントをお渡しいただくことだけです。Lean の予備知識は必要ありません。形式化がどこまで進み、どこで止まるのかを、実際の Repository で確かめていただけます。</p>
+            <p>依頼者にお願いするのは、論文またはプレプリントをお渡しいただくことだけです。Lean の予備知識は必要ありません。形式化がどこまで進み、どこで止まるのかを、実際の Repository と報告書で確かめていただけます。</p>
           </div>
         </div>
       </div>
@@ -578,7 +638,7 @@
             <h2 class="sec-title">進め方</h2>
           </div>
           <div class="sec-desc">
-            <p>作業期間はご相談のうえ着手前に決め、その中で形式化を進めます。最短 1〜3 営業日で納品しますが、論文の内容や分量によっては、より長い期間が必要になります。前後のご相談や納品後のご質問は、作業期間とは別に承ります。</p>
+            <p>標準では、作業開始から 7 日以内に納品します。具体的な納品日は、ご依頼ごとにお伝えします。標準料金の前提として、形式化の作業は 72 時間で打ち切り、その時点の結果をお渡しします。事前のご相談と納品後のご質問は、作業とは別に無料で承ります。</p>
           </div>
         </div>
         <div class="steps">
@@ -586,99 +646,107 @@
             <div class="step-num">1</div>
             <span class="who">依頼者</span>
             <h3>論文・プレプリントを渡す</h3>
-            <p>形式化したい数学の論文またはプレプリントをお送りください。全体ではなく、特に形式化したい定理や節があれば、あわせてお知らせください。</p>
+            <p>形式化したい数学の論文またはプレプリントをお送りください。全体ではなく、特に形式化したい定理や節があれば、あわせてお知らせください。事前のご相談は無料で、内容を確認したうえで納品日をお伝えします。</p>
           </div>
           <div class="step">
             <div class="step-num">2</div>
             <span class="who">MaSIC</span>
             <h3>形式化する</h3>
-            <p>定義・主張・証明を Lean 4 / mathlib の上に組み立てていきます。決めた作業期間の中で形式化を進め、どこまで到達できたかを確認します。</p>
+            <p>MaSIC が開発した AI エージェントによる作業ルーチンで、定義・主張・証明を Lean 4 / mathlib の上に組み立てていきます。Anthropic や OpenAI などの最新モデルを中心に構成しています。作業は 72 時間で打ち切り、到達点を確認します。</p>
           </div>
           <div class="step">
             <div class="step-num">3</div>
             <span class="who">納品</span>
-            <h3>Lean 4 の Repository を受け取る</h3>
-            <p>作業を終えた時点の Repository 一式をお渡しします。形式化できた範囲と、残った部分・止まった箇所（blocker）を明示します。</p>
+            <h3>Repository と報告書を受け取る</h3>
+            <p>作業を終えた時点の Repository（zip）と、報告書（PDF）をお渡しします。対象定理と Lean 側の対応、証明済み／未完了の区別、使用バージョンとビルド結果、残った課題を報告書に明記します。</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Scope -->
-    <section class="section section--surface" id="scope">
+    <!-- Pricing -->
+    <section class="section section--surface" id="pricing">
       <div class="container">
         <div class="sec-head">
           <div>
             <span class="sec-index">03</span>
-            <h2 class="sec-title">お渡しするものと、お約束の境界</h2>
+            <h2 class="sec-title">料金と期間</h2>
           </div>
           <div class="sec-desc">
-            <p>限られた作業期間で到達できる範囲は、論文の内容と mathlib の整備状況に大きく依存します。そのため本サービスは、成果を「完全な形式化」ではなく「作業を終えた時点の結果を、状態を隠さずにお渡しすること」として定義しています。</p>
+            <p>料金は、論文 1 本を対象に形式化を進めるためのものです。論文 1 本を完成させる料金ではなく、完全な形式化は保証しません。標準料金の前提として、作業は 72 時間で打ち切ります。継続は自動で延長せず、ご希望があれば追加作業日を承ります。</p>
+          </div>
+        </div>
+        <div class="pricing">
+          <div class="price-card">
+            <span class="label">初回料金</span>
+            <div class="amount">50,000<small>円（税別）</small></div>
+            <span class="unit">1 論文あたり</span>
+            <p>論文 1 本を対象に形式化を進める料金です。到達点と残った課題は、報告書に明記してお渡しします。</p>
+            <p>事前のご相談は無料です。</p>
+          </div>
+          <dl class="price-terms">
+            <div class="price-group">期間</div>
+            <div class="price-row">
+              <dt>標準の納品<span class="sub">具体的な納品日は、ご依頼ごとにお伝えします。</span></dt>
+              <dd>作業開始から <span class="ja">7 日以内</span></dd>
+            </div>
+            <div class="price-row">
+              <dt>作業の打ち切り<span class="sub">標準料金の前提です。この時点の結果を納品します。</span></dt>
+              <dd><span class="ja">72 時間</span></dd>
+            </div>
+            <div class="price-group">追加作業</div>
+            <div class="price-row">
+              <dt>追加作業日<span class="sub">継続は自動延長しません。ご希望の場合に 1 作業日（24 時間）単位で承ります。</span></dt>
+              <dd>+10,000<span class="ja"> 円 ／ 1 作業日</span></dd>
+            </div>
+            <div class="price-group">特急</div>
+            <div class="price-row">
+              <dt>5 日以内の納品指定</dt>
+              <dd>+20,000<span class="ja"> 円</span></dd>
+            </div>
+            <div class="price-row">
+              <dt>4 日以内の納品指定</dt>
+              <dd>+30,000<span class="ja"> 円</span></dd>
+            </div>
+            <div class="price-row">
+              <dt>それより早い納品指定<span class="sub">AI の実行時間に制約があるため、個別にご相談ください。</span></dt>
+              <dd><span class="ja">応相談</span></dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- Scope -->
+    <section class="section" id="scope">
+      <div class="container">
+        <div class="sec-head">
+          <div>
+            <span class="sec-index">04</span>
+            <h2 class="sec-title">納品物と、お約束の境界</h2>
+          </div>
+          <div class="sec-desc">
+            <p>限られた作業時間で到達できる範囲は、論文の内容と mathlib の整備状況に大きく依存します。そのため本サービスは、成果を「完全な形式化」ではなく「作業を終えた時点の結果を、状態を隠さずにお渡しすること」として定義しています。</p>
           </div>
         </div>
         <div class="scope">
           <div class="scope-col scope-yes">
             <h3>お渡しするもの</h3>
             <ul>
-              <li>作業を終えた時点の Lean 4 の Repository 一式</li>
-              <li>形式化できた定義・命題・証明の範囲の明示</li>
-              <li>残った部分と、進まなかった箇所（blocker）の明示<span class="sub">どこで、何が理由で止まったかをお伝えします。</span></li>
+              <li>Lean 4 の Repository（zip）<span class="sub">作業を終えた時点の一式です。コードは読みやすく整えてお渡しします。GitHub 等へのアップロードはお客様側で行っていただきます。</span></li>
+              <li>報告書（PDF）<span class="sub">対象定理と Lean 側の対応、証明済み／未完了の区別、使用バージョンとビルド結果、残った課題をまとめます。</span></li>
             </ul>
           </div>
           <div class="scope-col scope-no">
             <h3>お約束しないもの</h3>
             <ul>
-              <li>論文全体の完全な形式化<span class="sub">作業期間内に完了しない場合があります。その場合も、到達点と残りを明示してお渡しします。</span></li>
-              <li>読みやすさを整えたリファクタリングや説明文書<span class="sub">基本の作業では形式化そのものを優先します。必要な場合はオプションとしてご相談ください。</span></li>
-              <li>納品後の追加作業<span class="sub">着手前に決めた作業期間を超える作業は含まれません。継続をご希望の場合は、納品後に別途ご相談ください。</span></li>
+              <li>論文全体の完全な形式化<span class="sub">72 時間の作業で完了しない場合があります。その場合も、到達点と残りを報告書に明示してお渡しします。</span></li>
+              <li>作業の自動延長<span class="sub">継続をご希望の場合は、1 作業日（24 時間）あたり 10,000 円（税別）で追加作業を承ります。</span></li>
+              <li>GitHub 等への公開作業<span class="sub">Repository は zip でお渡しします。公開先へのアップロードはお客様側でお願いします。</span></li>
             </ul>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- Options -->
-    <section class="section" id="options">
-      <div class="container">
-        <div class="sec-head">
-          <div>
-            <span class="sec-index">04</span>
-            <h2 class="sec-title">オプション</h2>
-          </div>
-          <div class="sec-desc">
-            <p>納品した Repository を土台に、次のような作業を別途ご相談いただけます。内容と条件は個別にご案内します。</p>
-          </div>
-        </div>
-        <dl class="options">
-          <div class="option">
-            <span class="option-mark">A</span>
-            <div>
-              <dt>リファクタリング</dt>
-              <dd>納品した Repository のコードを、読みやすく保守しやすい形に整理します。</dd>
-            </div>
-          </div>
-          <div class="option">
-            <span class="option-mark">B</span>
-            <div>
-              <dt>原論文との忠実性チェック</dt>
-              <dd>形式化された定義や主張が、原論文の内容を正しく写しているかを確認します。</dd>
-            </div>
-          </div>
-          <div class="option">
-            <span class="option-mark">C</span>
-            <div>
-              <dt>説明文書の作成</dt>
-              <dd>Repository の構成、原論文との対応、残った箇所の背景をまとめた文書を作成します。</dd>
-            </div>
-          </div>
-          <div class="option">
-            <span class="option-mark">D</span>
-            <div>
-              <dt>mathlib への upstream</dt>
-              <dd>汎用性のある部分を、mathlib へ提出できる形に整えます。</dd>
-            </div>
-          </div>
-        </dl>
+        <p class="scope-examples">納品物の例（公開されている形式化の事例）：<a href="https://github.com/uda-lab/mobius-cpt" target="_blank" rel="noopener">Repository の例（GitHub）</a><span class="sep">·</span><a href="https://zenodo.org/records/22222446/files/mobius-cpt-note.pdf?download=1" target="_blank" rel="noopener">報告書の例（PDF, Zenodo）</a></p>
       </div>
     </section>
 
@@ -697,7 +765,7 @@
         <div class="trust">
           <div>
             <h3>アカデミックな研究のために</h3>
-            <p>大学・研究機関等でのアカデミックな研究を対象としています。研究費の範囲で試していただける水準の料金を想定しており、具体的な金額は決まり次第ご案内します。</p>
+            <p>大学・研究機関等でのアカデミックな研究を対象としています。研究費の範囲で試していただけるよう、初回は 1 論文あたり 50,000 円（税別）としています。事前のご相談は無料です。</p>
           </div>
           <div>
             <h3>未公開の内容をお預かりするにあたって</h3>
@@ -724,13 +792,19 @@
           <details>
             <summary>論文全体が形式化されますか。</summary>
             <div class="answer">
-              <p>お約束はできません。到達できる範囲は、論文の内容と、必要な基礎がどこまで mathlib に整っているかに大きく依存します。作業期間内にどこまで進み、どこで止まったかを明示してお渡しします。</p>
+              <p>お約束はできません。料金は論文 1 本を対象に形式化を進めるためのもので、完成を保証するものではありません。到達できる範囲は、論文の内容と、必要な基礎がどこまで mathlib に整っているかに大きく依存します。72 時間の作業でどこまで進み、どこで止まったかを、報告書で証明済み／未完了に分けて明示します。</p>
+            </div>
+          </details>
+          <details>
+            <summary>どのように形式化を進めるのですか。</summary>
+            <div class="answer">
+              <p>MaSIC が開発した AI エージェントによる作業ルーチンで進めます。Anthropic や OpenAI などの最新モデルを中心に構成しています。標準料金では作業を 72 時間で打ち切り、その時点の Repository と報告書をお渡しします。</p>
             </div>
           </details>
           <details>
             <summary>Lean を知らなくても依頼できますか。</summary>
             <div class="answer">
-              <p>できます。お願いするのは論文・プレプリントをお渡しいただくことだけで、Lean の環境構築や予備知識は必要ありません。納品する Repository の読み方については、納品時にご説明します。</p>
+              <p>できます。お願いするのは論文・プレプリントをお渡しいただくことだけで、Lean の環境構築や予備知識は必要ありません。報告書に対象定理と Lean 側の対応、使用バージョンとビルド結果を記載しますので、Repository の読み方はそこから確認いただけます。</p>
             </div>
           </details>
           <details>
@@ -748,13 +822,25 @@
           <details>
             <summary>納品後、形式化を続けてもらえますか。</summary>
             <div class="answer">
-              <p>基本の作業には含まれませんが、継続作業やリファクタリング、説明文書の作成、mathlib への upstream などはオプションとして別途ご相談いただけます。</p>
+              <p>継続は自動では延長しません。ご希望の場合は、1 作業日（24 時間）あたり 10,000 円（税別）で追加作業を承ります。納品した Repository と報告書を土台に、続きの作業を進めます。</p>
             </div>
           </details>
           <details>
-            <summary>料金と申込方法はいつ決まりますか。</summary>
+            <summary>急いで納品してもらうことはできますか。</summary>
             <div class="answer">
-              <p>いずれも現在準備中（TBA）です。料金は研究費の範囲で試していただける水準を想定しています。決まり次第、本ページに掲載します。それまでは、メールでお問い合わせいただければ個別にご案内します。</p>
+              <p>特急でのご依頼を承ります。5 日以内の納品指定は +20,000 円（税別）、4 日以内の納品指定は +30,000 円（税別）です。それより早い納品指定は、AI の実行時間に制約があるため、個別にご相談ください。</p>
+            </div>
+          </details>
+          <details>
+            <summary>納品された Repository を公開できますか。</summary>
+            <div class="answer">
+              <p>Repository は zip でお渡しします。GitHub 等へのアップロードや公開はお客様側で行っていただけます。公開の可否や形はお客様の判断にお任せします。</p>
+            </div>
+          </details>
+          <details>
+            <summary>料金と申込方法を教えてください。</summary>
+            <div class="answer">
+              <p>初回は 1 論文あたり 50,000 円（税別）です。事前のご相談は無料で、メールで受け付けています。論文の概要と、特に形式化したい部分をお知らせいただければ、見通しと納品日をお伝えします。</p>
             </div>
           </details>
         </div>
@@ -767,11 +853,13 @@
         <div class="cta">
           <div>
             <h2>まずは、論文の概要からご相談を</h2>
-            <p>正式な申込方法は準備中ですが、ご関心のある方からのご相談はメールで受け付けています。対象となる論文やプレプリントの概要、特に形式化したい部分をお知らせいただければ、見通しをお伝えします。</p>
+            <p>事前のご相談は無料で、メールで受け付けています。対象となる論文やプレプリントの概要、特に形式化したい部分をお知らせいただければ、見通しと納品日をお伝えします。</p>
+            <p>初回は 1 論文あたり 50,000 円（税別）、作業開始から 7 日以内に納品します。</p>
           </div>
           <div class="cta-side">
-            <a href="mailto:info@masic.jp?subject=%5B%E8%AB%96%E6%96%87%E3%81%AE%E5%BD%A2%E5%BC%8F%E5%8C%96%5D%20%E3%81%94%E7%9B%B8%E8%AB%87" class="btn btn-primary">info@masic.jp に相談する</a>
-            <span class="small">料金・申込方法・機密保持契約は準備中（TBA）です。決まり次第、本ページを更新します。</span>
+            <a href="#apply" class="btn btn-primary">申し込む</a>
+            <a href="mailto:info@masic.jp?subject=%5B%E8%AB%96%E6%96%87%E3%81%AE%E5%BD%A2%E5%BC%8F%E5%8C%96%5D%20%E3%81%94%E7%9B%B8%E8%AB%87" class="btn btn-ghost">info@masic.jp に相談する</a>
+            <span class="small">機密保持契約は準備中です。整い次第、本ページに掲載します。</span>
           </div>
         </div>
         <p class="provider">提供：一般社団法人 数理社会実装教育研究センター（MaSIC）　·　<a href="../index.html">法人トップページ</a></p>
