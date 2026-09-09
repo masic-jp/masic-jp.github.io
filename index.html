@@ -74,6 +74,21 @@
       font-size: 1.25rem;
       letter-spacing: 0.05em;
     }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+    }
+    .nav-link {
+      font-family: var(--font-ja);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover,
+    .nav-link.is-current { color: var(--c-primary); }
     .nav-contact {
       font-family: var(--font-ja);
       font-size: 0.9rem;
@@ -227,6 +242,78 @@
       font-size: 0.95rem;
     }
 
+    /* News strip (compact notice band under the hero) */
+    .news-strip {
+      background: var(--c-surface);
+      border-top: 1px solid var(--c-border);
+      border-bottom: 1px solid var(--c-border);
+      padding: 0 5%;
+    }
+    .news-strip-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      min-height: 64px;
+      padding: 1rem 0;
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    .news-label {
+      flex-shrink: 0;
+      font-family: var(--font-en);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--c-primary);
+    }
+    .news-item {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .news-date {
+      flex-shrink: 0;
+      font-family: var(--font-en);
+      font-size: 0.85rem;
+      font-weight: 500;
+      font-variant-numeric: tabular-nums;
+      color: var(--c-text-muted);
+    }
+    .news-text {
+      font-family: var(--font-ja);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .news-text strong {
+      font-weight: 700;
+      transition: color 0.2s;
+    }
+    .news-item:hover .news-text strong { color: var(--c-primary); }
+    .news-sub {
+      color: var(--c-text-muted);
+      font-weight: 400;
+    }
+    .news-sub::before {
+      content: "―";
+      margin: 0 0.5em;
+      color: var(--c-border);
+    }
+    .news-all {
+      flex-shrink: 0;
+      font-family: var(--font-ja);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--c-text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .news-all:hover { color: var(--c-primary); }
+
     /* Info Table */
     .info-wrapper {
       background: var(--c-surface);
@@ -310,19 +397,33 @@
       .info-wrapper { padding: 1.5rem; }
       .info-table th, .info-table td { display: block; width: 100%; padding: 0.75rem 0; }
       .info-table th { padding-bottom: 0; border-bottom: none; }
+      .news-strip-inner { flex-wrap: wrap; gap: 0.5rem 1rem; padding: 1rem 0; }
+      .news-item { flex-basis: 100%; flex-direction: column; gap: 0.15rem; }
+      .news-sub { display: block; }
+      .news-sub::before { content: none; }
+      .news-all { margin-left: auto; }
+    }
+    @media (max-width: 640px) {
+      .nav { padding: 0 4%; }
+      .nav-logo { height: 32px; }
+      .nav-title { display: none; }
+      .nav-links { gap: 0.65rem; }
+      .nav-link { font-size: 0.8rem; }
+      .nav-contact {
+        padding: 0;
+        background: transparent;
+        color: var(--c-text);
+        border-radius: 0;
+        font-size: 0.8rem;
+      }
+      .nav-contact:hover { background: transparent; color: var(--c-primary); }
     }
   </style>
 </head>
 <body>
 
   <!-- Sticky Navigation -->
-  <nav class="nav">
-    <a href="#" class="nav-brand">
-      <img src="logo-icon.png" alt="MaSIC Logo" class="nav-logo">
-      <span class="nav-title">MaSIC</span>
-    </a>
-    <a href="mailto:info@masic.jp" class="nav-contact">お問い合わせ</a>
-  </nav>
+  <div id="site-nav"></div>
 
   <!-- Hero Section -->
   <section class="hero">
@@ -334,6 +435,20 @@
           一般社団法人 数理社会実装教育研究センター（MaSIC）は、数理科学が持つ力を、教育と社会実装を通じて広く届け、数学で課題を解く次世代の人材を育成します。
         </p>
       </div>
+    </div>
+  </section>
+
+  <!-- News strip -->
+  <section class="news-strip" aria-label="お知らせ">
+    <div class="news-strip-inner">
+      <span class="news-label">News</span>
+      <a class="news-item" href="ai-education-workshop/1/">
+        <time class="news-date" datetime="2026-12-23">2026.12.23</time>
+        <span class="news-text">
+          <strong>第1回 MaSIC AI Education Workshop</strong><span class="news-sub">数理を題材に、「AIで学ぶ」を実践する<span style="white-space: nowrap;">（オンライン・無料）</span></span>
+        </span>
+      </a>
+      <a class="news-all" href="events/">イベント一覧 →</a>
     </div>
   </section>
 
@@ -403,6 +518,7 @@
       </footer>
     </noscript>
   </div>
+  <script src="nav.js"></script>
   <script src="footer.js"></script>
 
   <script>

@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>電子公告 — 一般社団法人 数理社会実装教育研究センター（MaSIC）</title>
-  <meta name="robots" content="index,follow">
+  <title>イベント — 一般社団法人 数理社会実装教育研究センター（MaSIC）</title>
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
   <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
@@ -37,12 +36,7 @@
       flex-direction: column;
     }
 
-    h1, h2, h3 {
-      font-family: var(--font-ja);
-      line-height: 1.3;
-      font-weight: 700;
-    }
-
+    h1, h2, h3 { font-family: var(--font-ja); line-height: 1.3; font-weight: 700; }
     p { font-family: var(--font-ja); }
 
     .nav {
@@ -67,11 +61,7 @@
       color: var(--c-text);
     }
     .nav-logo { height: 40px; width: auto; }
-    .nav-title {
-      font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: 0.05em;
-    }
+    .nav-title { font-weight: 800; font-size: 1.25rem; letter-spacing: 0.05em; }
     .nav-links { display: flex; align-items: center; gap: 1.25rem; }
     .nav-link {
       font-family: var(--font-ja);
@@ -95,29 +85,10 @@
       transition: background 0.3s;
     }
     .nav-contact:hover { background: var(--c-primary); }
-    .nav-back {
-      font-family: var(--font-ja);
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--c-text);
-      text-decoration: none;
-      padding: 0.6rem 1.25rem;
-      border-radius: 999px;
-      border: 1px solid var(--c-border);
-      transition: all 0.3s;
-    }
-    .nav-back:hover {
-      background: var(--c-text);
-      color: #fff;
-      border-color: var(--c-text);
-    }
 
     main {
       flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 6rem 5%;
+      padding: 6rem 5% 4rem;
       position: relative;
       overflow: hidden;
     }
@@ -129,13 +100,8 @@
         radial-gradient(circle at 20% 80%, rgba(2, 132, 199, 0.04) 0%, transparent 40%);
       z-index: -1;
     }
-
-    .notice {
-      max-width: 720px;
-      width: 100%;
-      text-align: center;
-    }
-    .notice-label {
+    .page { max-width: 800px; margin: 0 auto; width: 100%; }
+    .page-label {
       font-family: var(--font-en);
       font-weight: 800;
       color: var(--c-primary);
@@ -145,21 +111,49 @@
       margin-bottom: 1rem;
       display: block;
     }
-    .notice-title {
+    .page-title {
       font-size: clamp(1.5rem, 3.5vw, 2rem);
       font-weight: 700;
       margin-bottom: 2.5rem;
-      color: var(--c-text);
-      letter-spacing: 0.02em;
     }
-    .notice-body {
+
+    .event-card {
+      display: block;
       background: var(--c-surface);
       border: 1px solid var(--c-border);
       border-radius: 24px;
-      padding: 3rem 2rem;
-      font-size: 1.1rem;
-      color: var(--c-text);
-      font-weight: 500;
+      padding: 2rem 2rem 1.75rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .event-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.05);
+      border-color: transparent;
+      background: #fff;
+    }
+    .event-meta {
+      font-family: var(--font-ja);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--c-primary-dark);
+      margin-bottom: 0.75rem;
+    }
+    .event-card h2 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+    .event-card p {
+      color: var(--c-text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+    .event-more {
+      font-family: var(--font-ja);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-primary);
     }
 
     .footer {
@@ -175,23 +169,15 @@
       opacity: 0.5;
       filter: grayscale(100%) brightness(200%);
     }
-    .footer-links {
-      margin-bottom: 1rem;
-    }
+    .footer-links { margin-bottom: 1rem; }
     .footer-links a {
       color: #64748b;
       text-decoration: none;
       font-size: 0.85rem;
       font-family: var(--font-ja);
     }
-    .footer-links a:hover {
-      color: #cbd5e1;
-      text-decoration: underline;
-    }
+    .footer-links a:hover { color: #cbd5e1; text-decoration: underline; }
 
-    @media (max-width: 600px) {
-      .notice-body { padding: 2rem 1.25rem; font-size: 1rem; }
-    }
     @media (max-width: 640px) {
       .nav { padding: 0 4%; }
       .nav-logo { height: 32px; }
@@ -210,17 +196,19 @@
   </style>
 </head>
 <body>
-
   <div id="site-nav"></div>
 
   <main>
     <div class="bg"></div>
-    <div class="notice">
-      <span class="notice-label">Public Notice</span>
-      <h1 class="notice-title">一般社団法人 数理社会実装教育研究センター 電子公告</h1>
-      <div class="notice-body">
-        <p>現在、公告すべき事項はありません。</p>
-      </div>
+    <div class="page">
+      <span class="page-label">Events</span>
+      <h1 class="page-title">イベント</h1>
+      <a class="event-card" href="../ai-education-workshop/1/">
+        <p class="event-meta">2026年12月23日（水）13:30–16:30（予定）　／　オンライン　／　無料</p>
+        <h2>第1回 MaSIC AI Education Workshop</h2>
+        <p>数理を題材に、「AIで学ぶ」を実践する</p>
+        <span class="event-more">詳細を見る</span>
+      </a>
     </div>
   </main>
 
@@ -231,7 +219,7 @@
         <p class="footer-links">
           <a href="../houjin.html">法人情報</a>
           <span aria-hidden="true"> · </span>
-          <a href="index.html">電子公告</a>
+          <a href="../koukoku/index.html">電子公告</a>
           <span aria-hidden="true"> · </span>
           <a href="../tokushoho.html">特定商取引法に基づく表記</a>
         </p>
@@ -241,6 +229,5 @@
   </div>
   <script src="../nav.js"></script>
   <script src="../footer.js"></script>
-
 </body>
 </html>

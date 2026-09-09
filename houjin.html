@@ -72,6 +72,29 @@
       font-size: 1.25rem;
       letter-spacing: 0.05em;
     }
+    .nav-links { display: flex; align-items: center; gap: 1.25rem; }
+    .nav-link {
+      font-family: var(--font-ja);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--c-text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover,
+    .nav-link.is-current { color: var(--c-primary); }
+    .nav-contact {
+      font-family: var(--font-ja);
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      background: var(--c-text);
+      padding: 0.6rem 1.25rem;
+      border-radius: 999px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+    .nav-contact:hover { background: var(--c-primary); }
     .nav-back {
       font-family: var(--font-ja);
       font-size: 0.9rem;
@@ -194,17 +217,26 @@
       .info-table th, .info-table td { display: block; width: 100%; padding: 0.75rem 0; }
       .info-table th { padding-bottom: 0; border-bottom: none; }
     }
+    @media (max-width: 640px) {
+      .nav { padding: 0 4%; }
+      .nav-logo { height: 32px; }
+      .nav-title { display: none; }
+      .nav-links { gap: 0.65rem; }
+      .nav-link { font-size: 0.8rem; }
+      .nav-contact {
+        padding: 0;
+        background: transparent;
+        color: var(--c-text);
+        border-radius: 0;
+        font-size: 0.8rem;
+      }
+      .nav-contact:hover { background: transparent; color: var(--c-primary); }
+    }
   </style>
 </head>
 <body>
 
-  <nav class="nav">
-    <a href="index.html" class="nav-brand">
-      <img src="logo-icon.png" alt="MaSIC Logo" class="nav-logo">
-      <span class="nav-title">MaSIC</span>
-    </a>
-    <a href="index.html" class="nav-back">トップへ戻る</a>
-  </nav>
+  <div id="site-nav"></div>
 
   <main>
     <div class="bg"></div>
@@ -257,6 +289,7 @@
       </footer>
     </noscript>
   </div>
+  <script src="nav.js"></script>
   <script src="footer.js"></script>
 
 </body>
