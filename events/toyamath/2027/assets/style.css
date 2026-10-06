@@ -1,0 +1,38 @@
+* { box-sizing: border-box; }
+:root { color-scheme: light; }
+body { margin: 0; color: #27313b; background: #fff; font-family: -apple-system, BlinkMacSystemFont, "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif; font-size: 16px; line-height: 1.9; border-top: 5px solid #243f57; }
+a { color: #245b7b; text-underline-offset: .22em; }
+a:hover { color: #132f43; }
+a:focus-visible { outline: 2px solid #245b7b; outline-offset: 4px; }
+.page, .conference-footer { width: min(880px, calc(100% - 48px)); margin: auto; }
+main { padding: 56px 0 40px; }
+.conference-header { padding-bottom: 30px; }
+.page-label { margin: 0 0 12px; color: #53687a; font-family: Georgia, serif; font-size: 21px; letter-spacing: .06em; }
+.page-title { margin: 0 0 22px; color: #243f57; font-family: "Yu Mincho", "Hiragino Mincho ProN", serif; font-size: clamp(26px, 4.5vw, 38px); font-weight: 600; line-height: 1.5; }
+.page-title span { white-space: nowrap; }
+.conference-date { margin: 0 0 4px; font-size: 19px; font-weight: 600; }
+.conference-date span { margin-left: 14px; font-size: 13px; font-weight: 400; color: #56616b; }
+.conference-venue { margin: 0; font-size: 15px; }
+.section-nav { display: flex; flex-wrap: wrap; gap: 8px 24px; padding: 14px 0; border-block: 1px solid #cbd3d9; font-size: 14px; }
+.section-nav a { text-decoration: none; }
+.section-nav a:hover { text-decoration: underline; }
+.section { margin-top: 32px; scroll-margin-top: 24px; }
+h2 { color: #243f57; font-size: 21px; font-weight: 600; margin: 0 0 16px; padding-bottom: 7px; border-bottom: 1px solid #d8dee3; }
+h3 { color: #243f57; font-size: 17px; font-weight: 600; margin: 24px 0 8px; }
+p { margin: 0 0 12px; }
+ul { padding-left: 1.4em; margin: 10px 0 16px; }
+li + li { margin-top: 6px; }
+.status { color: #606b75; }
+#news { font-size: 14px; }
+#organizers { padding-top: 4px; border-top: 1px solid #d8dee3; }
+.conference-footer { padding: 22px 0 32px; border-top: 1px solid #cbd3d9; color: #66717b; font-size: 12px; }
+.conference-footer p { margin: 0 0 4px; }
+@media (max-width: 600px) { main { padding-top: 30px; } .page, .conference-footer { width: calc(100% - 36px); } .conference-date { font-size: 16px; } .conference-date span { display: block; margin-left: 0; } .section-nav { gap: 8px 20px; } }
+
+
+.conference-header { position:relative; padding-right:125px; }
+.mascot { position:absolute; right:0; top:12px; width:110px; height:110px; object-fit:contain; }
+.conference-note { font-size:14px; margin:0 0 10px; }
+.landscape { margin:0 0 24px; }
+.landscape img { display:block; width:100%; height:auto; }
+@media(max-width:600px) { .conference-header { padding-right:0; } .mascot { width:60px; height:60px; top:-8px; } .page-label { padding-right:70px; } }

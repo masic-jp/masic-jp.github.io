@@ -15,7 +15,11 @@
   // 新しいサブディレクトリを増やしたら、階層の深さに応じて条件を追加すること。
   var path = window.location.pathname;
   var prefix = '';
-  if (path.indexOf('/ai-education-workshop/') !== -1) {
+  if (/\/events\/toyamath\/\d{4}(?:\/|$)/.test(path)) {
+    prefix = '../../../';
+  } else if (path.indexOf('/events/toyamath/') !== -1) {
+    prefix = '../../';
+  } else if (path.indexOf('/ai-education-workshop/') !== -1) {
     // 例: /ai-education-workshop/1/ のような 2 階層下のページ
     prefix = '../../';
   } else if (

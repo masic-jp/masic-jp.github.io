@@ -6,7 +6,11 @@
 (function () {
   var path = window.location.pathname;
   var prefix = '';
-  if (path.indexOf('/ai-education-workshop/') !== -1) {
+  if (/\/events\/toyamath\/\d{4}(?:\/|$)/.test(path)) {
+    prefix = '../../../';
+  } else if (path.indexOf('/events/toyamath/') !== -1) {
+    prefix = '../../';
+  } else if (path.indexOf('/ai-education-workshop/') !== -1) {
     prefix = '../../';
   } else if (
     path.indexOf('/koukoku/') !== -1 ||
@@ -33,6 +37,8 @@
 
   var el = document.getElementById('site-nav');
   if (!el) return;
+
+  var homeUrl = el.getAttribute('data-home-url') || prefix + 'index.html';
 
   el.innerHTML =
     '<style>\n' +
@@ -79,7 +85,7 @@
     '  }\n' +
     '</style>\n' +
     '<nav class="nav nav-disclosure-nav">\n' +
-    '  <a href="' + prefix + 'index.html" class="nav-brand">\n' +
+    '  <a href="' + homeUrl + '" class="nav-brand">\n' +
     '    <img src="' + prefix + 'logo-icon.png" alt="MaSIC Logo" class="nav-logo">\n' +
     '    <span class="nav-brand-text"><span class="nav-title">MaSIC</span><span class="nav-organization-name">一般社団法人<br>数理社会実装教育研究センター</span></span>\n' +
     '  </a>\n' +
