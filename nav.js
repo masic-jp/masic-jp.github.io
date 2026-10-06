@@ -36,6 +36,7 @@
 
   el.innerHTML =
     '<style>\n' +
+    '  .nav-brand-text { display:flex; flex-direction:column; gap:2px; } .nav-organization-name { font-size:11px; font-weight:400; line-height:1.35; letter-spacing:0; } @media(max-width:640px) { .nav-organization-name { font-size:9px; max-width:13em; } .nav-brand { gap:6px; } }\n' +
     '  .nav-disclosure-nav .nav-disclosure { position: relative; }\n' +
     '  .nav-disclosure-nav .nav-disclosure-button {\n' +
     '    appearance: none; -webkit-appearance: none; border: 0; margin: 0; padding: 0;\n' +
@@ -80,7 +81,7 @@
     '<nav class="nav nav-disclosure-nav">\n' +
     '  <a href="' + prefix + 'index.html" class="nav-brand">\n' +
     '    <img src="' + prefix + 'logo-icon.png" alt="MaSIC Logo" class="nav-logo">\n' +
-    '    <span class="nav-title">MaSIC</span>\n' +
+    '    <span class="nav-brand-text"><span class="nav-title">MaSIC</span><span class="nav-organization-name">一般社団法人<br>数理社会実装教育研究センター</span></span>\n' +
     '  </a>\n' +
     '  <div class="nav-links">\n' +
     '    <div class="nav-disclosure">\n' +
