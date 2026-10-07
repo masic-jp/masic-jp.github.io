@@ -95,6 +95,7 @@
     '      <div id="' + eventsPanelId + '" class="nav-disclosure-panel" hidden>\n' +
     '        <ul class="nav-disclosure-list">\n' +
     '          <li><a href="' + prefix + 'ai-education-workshop/1/">第1回 MaSIC AI Education Workshop <small>2026.12.23｜オンライン・無料</small></a></li>\n' +
+    '          <li><a href="' + prefix + 'events/toyamath/2027/">富山数理ワークショップ 2027 <small>2027.3.18–19｜富山大学</small></a></li>\n' +
     '          <li><a href="' + prefix + 'events/">イベント一覧</a></li>\n' +
     '        </ul>\n' +
     '      </div>\n' +
