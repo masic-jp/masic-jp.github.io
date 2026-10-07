@@ -24,8 +24,6 @@
   var current = '';
   if (path.indexOf('/events/') !== -1 || path.indexOf('/ai-education-workshop/') !== -1) {
     current = 'events';
-  } else if (path.indexOf('/services/') !== -1) {
-    current = 'services';
   }
 
   function linkClass(name) {
@@ -33,7 +31,6 @@
   }
 
   var eventsPanelId = 'nav-events-panel';
-  var servicesPanelId = 'nav-services-panel';
 
   var el = document.getElementById('site-nav');
   if (!el) return;
@@ -97,15 +94,6 @@
     '          <li><a href="' + prefix + 'ai-education-workshop/1/">第1回 MaSIC AI Education Workshop <small>2026.12.23｜オンライン・無料</small></a></li>\n' +
     '          <li><a href="' + prefix + 'events/toyamath/2027/">富山数理ワークショップ 2027 <small>2027.3.18–19｜富山大学</small></a></li>\n' +
     '          <li><a href="' + prefix + 'events/">イベント一覧</a></li>\n' +
-    '        </ul>\n' +
-    '      </div>\n' +
-    '    </div>\n' +
-    '    <div class="nav-disclosure">\n' +
-    '      <button type="button" class="' + linkClass('services') + ' nav-disclosure-button" aria-expanded="false" aria-controls="' + servicesPanelId + '">サービス</button>\n' +
-    '      <div id="' + servicesPanelId + '" class="nav-disclosure-panel" hidden>\n' +
-    '        <ul class="nav-disclosure-list">\n' +
-    '          <li><span class="nav-disclosure-note"><strong>現在準備中です。</strong><small>公開までしばらくお待ちください。</small></span></li>\n' +
-    '          <li><a href="mailto:info@masic.jp">メールでお問い合わせ</a></li>\n' +
     '        </ul>\n' +
     '      </div>\n' +
     '    </div>\n' +
