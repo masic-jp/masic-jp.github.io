@@ -41,10 +41,8 @@
     '  <div class="footer-organization" style="margin:0 auto 1.5rem;max-width:48rem;line-height:1.9;color:#cbd5e1;overflow-wrap:anywhere">\n' +
     '    <p>一般社団法人 数理社会実装教育研究センター（MaSIC）</p>\n' +
     '    <p>法人番号：8011105011832</p>\n' +
-    '    <p>所在地：〒169-0075 東京都新宿区高田馬場１丁目１番１５－１１０２号</p>\n' +
+    '    <p>所在地：〒169-0075 東京都新宿区高田馬場１丁目</p>\n' +
     '    <p>お問い合わせ：<a href="mailto:info@masic.jp" style="color:inherit">info@masic.jp</a></p>\n' +
-    '    <p>Google Workspace 管理者：<a href="mailto:admin@masic.jp" style="color:inherit">admin@masic.jp</a></p>\n' +
-    '    <p>公式サイト：<a href="https://masic.jp/" style="color:inherit">masic.jp</a>（当法人が管理・運営しています）</p>\n' +
     '  </div>\n' +
     '  <p class="footer-links">\n' +
     '    <a href="' + prefix + 'houjin.html">法人情報</a>\n' +
