@@ -1,0 +1,85 @@
+/* Compact organization details shared by every MaSIC footer. */
+.footer {
+  padding: 3rem 5%;
+}
+
+.footer .footer-logo {
+  margin-bottom: 1.25rem;
+}
+
+.footer-organization {
+  max-width: 64rem;
+  margin: 0 auto 1.25rem;
+  color: #94a3b8;
+  font-family: var(--font-ja, sans-serif);
+  font-size: 0.75rem;
+  font-weight: 400;
+  line-height: 1.9;
+}
+
+.footer-organization p {
+  margin: 0;
+}
+
+.footer-organization-name {
+  letter-spacing: 0.025em;
+}
+
+.footer-organization .footer-organization-details {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.1rem 1rem;
+  margin-top: 0.25rem;
+}
+
+.footer-organization-details > * {
+  white-space: nowrap;
+}
+
+.footer-organization-details > * + * {
+  border-left: 1px solid rgba(148, 163, 184, 0.3);
+  padding-left: 1rem;
+}
+
+.footer-organization-details a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.footer-organization-details a:hover {
+  color: #cbd5e1;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.footer-organization-details a:focus-visible {
+  outline: 2px solid #94a3b8;
+  outline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  .footer {
+    padding: 2.5rem 5%;
+  }
+
+  .footer-organization-name {
+    letter-spacing: 0;
+  }
+
+  .footer-organization-registration {
+    order: 1;
+  }
+
+  .footer-organization-email {
+    order: 2;
+  }
+
+  .footer-organization-address {
+    order: 3;
+    flex-basis: 100%;
+    border-left: 0;
+    padding-left: 0;
+  }
+}

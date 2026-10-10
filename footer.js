@@ -38,11 +38,13 @@
   el.innerHTML =
     '<footer class="footer">\n' +
     '  <img src="' + prefix + 'logo-full.png" alt="MaSIC" class="footer-logo">\n' +
-    '  <div class="footer-organization" style="margin:0 auto 1.5rem;max-width:48rem;line-height:1.9;color:#cbd5e1;overflow-wrap:anywhere">\n' +
-    '    <p>一般社団法人 数理社会実装教育研究センター（MaSIC）</p>\n' +
-    '    <p>法人番号：8011105011832</p>\n' +
-    '    <p>所在地：〒169-0075 東京都新宿区高田馬場１丁目</p>\n' +
-    '    <p>お問い合わせ：<a href="mailto:info@masic.jp" style="color:inherit">info@masic.jp</a></p>\n' +
+    '  <div class="footer-organization">\n' +
+    '    <p class="footer-organization-name">一般社団法人 数理社会実装教育研究センター</p>\n' +
+    '    <p class="footer-organization-details">\n' +
+    '      <span class="footer-organization-registration">法人番号 8011105011832</span>\n' +
+    '      <span class="footer-organization-address">〒169-0075 東京都新宿区高田馬場１丁目</span>\n' +
+    '      <a class="footer-organization-email" href="mailto:info@masic.jp">info@masic.jp</a>\n' +
+    '    </p>\n' +
     '  </div>\n' +
     '  <p class="footer-links">\n' +
     '    <a href="' + prefix + 'houjin.html">法人情報</a>\n' +
