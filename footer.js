@@ -43,7 +43,7 @@
     '    <p class="footer-organization-details">\n' +
     '      <span class="footer-organization-registration">法人番号 8011105011832</span>\n' +
     '      <span class="footer-organization-address">〒169-0075 東京都新宿区高田馬場１丁目</span>\n' +
-    '      <a class="footer-organization-email" href="mailto:info@masic.jp">info@masic.jp</a>\n' +
+    '      <a class="footer-organization-email" href="mailto:info@masic.jp">お問い合わせ：info@masic.jp</a>\n' +
     '    </p>\n' +
     '  </div>\n' +
     '  <p class="footer-links">\n' +

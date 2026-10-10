@@ -83,3 +83,15 @@
     padding-left: 0;
   }
 }
+
+@media (max-width: 380px) {
+  .footer-organization .footer-organization-details {
+    column-gap: 0.5rem;
+    font-size: 0.6875rem;
+  }
+
+  .footer-organization-email {
+    border-left: 0;
+    padding-left: 0;
+  }
+}
